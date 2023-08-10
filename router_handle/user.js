@@ -6,6 +6,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 // 导入 加密盐
 const { secretKey, expiresIn } = require("../config");
+// snake_case => camelCase
+const {convertSnakeToCamel} = require("../utils");
 
 // 注册处理函数
 exports.regUser = (req, res) => {
@@ -76,6 +78,10 @@ exports.login = (req, res) => {
       status: 0,
       message: "登录成功",
       data: { token, userInfo: { userPic: result[0].user_pic, ...userInfo } },
+      // data: convertSnakeToCamel({
+      //   token,
+      //   userInfo: { userPic: result[0].user_pic, ...userInfo },
+      // }),
     });
   });
 };
